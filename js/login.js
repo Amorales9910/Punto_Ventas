@@ -25,6 +25,51 @@ function ejecutar (e){
         //los campos estan llenos
     } else{
         //console.log ('correcto');
+        var usuarioregex,pwdregex ;
+        usuarioregex = /^\w+([a-zA-Z0-9-_]?\w+)+$/
+        pwdregex = /^\w+([a-zA-Z0-9-_]?\w+)+$/ 
+        let entrar = true
+        if (!usuarioregex.test(a)){
+            Swal.fire(
+                'campo invalido',
+                'este campo solo puede tener numeros ,letras , gion bajo',
+                'info'
+            )
+             entrar = false 
+        }
+        if (!pwdregex.test(b)){
+            Swal.fire(
+                'campo invalido',
+                'este campo solo puede tener numeros ,letras , gion bajo',
+                'info'
+            )
+             entrar = false 
+        }
+
+        if (entrar===true){
+            console.log ("validando") ;
+            //codigo de login
+            var datos = new FormData();
+            datos.append('usuario',a);
+            datos.append('password',b);
+            var ajax = new XMLHttpRequest();
+            ajax.open('POST','partials/login_back.php',true);
+            //esperamos la respuesta de php
+            ajax.onload= function(){
+                if (this.status === 200){
+                    console.log(JSON.parse(ajax.responseText)); 
+                }
+            ajax.send(datos);
+            }
+
+        } else {
+            Swal.fire(
+                'error',
+                'revisa tus credenciales',
+                'error'
+            )
+        }
+
     }
 
 }
